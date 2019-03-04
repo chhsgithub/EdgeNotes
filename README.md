@@ -26,6 +26,7 @@ Features:
 ****
 # To do
 - Settings to enable fonts or someting else.
+- Rewrite comments in english
 - Dragable
 - History of item
 - Android app
