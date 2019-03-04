@@ -4,7 +4,8 @@ A small note that appears and hides on the edge of the screen, when you put the 
 Like a system feature: 
 - Without taskbar icon
 - Without tray icon
-- Memory usage 8 MB
+- Memory usage 15 MB
+- Appear and disappear depends on cursor position
 
 ![show](https://github.com/chhsgithub/EdgeNotes/blob/master/gif.gif)
 ****
