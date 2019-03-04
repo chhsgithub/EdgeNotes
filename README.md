@@ -6,6 +6,7 @@ Features:
 - Without tray icon
 - Memory usage 15 MB
 - Appear and disappear depends on cursor position
+- Pin/ unpin on the top
 
 ![show](https://github.com/chhsgithub/EdgeNotes/blob/master/gif.gif)
 ****
