@@ -26,8 +26,11 @@ Features:
 - Mouse cursor leave EdgeNotes to let it disappear.
 
 ****
-# To do
+# Done
 - Settings to enable fonts or someting else.
+
+****
+# To do
 - Rewrite comments in english
 - Dragable
 - History of item
