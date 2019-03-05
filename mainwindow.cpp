@@ -10,9 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     //setWindowOpacity(0.7); //透明
     ///图标
-    checkIcon = QIcon(":/icons/check");
-    ui->pinButton->setIcon(QIcon(":/icons/pin"));
-    ui->settingButton->setIcon(QIcon(":/icons/setting"));
+    //checkIcon = QIcon(":/icons/check");
+    checkIcon.addFile(":/icons/check");
+
 
     ///获取可用桌面大小
     desktopWidget = QApplication::desktop();
@@ -78,6 +78,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toDoTable->setGraphicsEffect(effect);
 
 
+    ///pin or unpin event
+    ui->pinLabel->installEventFilter(this);
 
 }
 
@@ -121,29 +123,42 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == ui->toDoTable)
-        {
-            if (event->type() == QEvent::MouseButtonPress){
-                //qDebug() << "table mouse press event";
-            }
-            else if (event->type() == QEvent::MouseMove){
-                //qDebug() << "table mouse moveevent";
-            }
+    {
+        if (event->type() == QEvent::MouseButtonPress){
+            //qDebug() << "table mouse press event";
         }
-        else if (obj == ui->toDoTable->viewport())
-        {
-            if (event->type() == QEvent::MouseButtonPress){
-                //qDebug() << "table->viewport mouse press event";
-                this->posMouseOrigin = QCursor::pos(); //cursor是一个光标类
-            }
-            else if (event->type() == QEvent::MouseMove){
-                QPoint ptMouseNow = QCursor::pos();
-                QPoint ptDelta = ptMouseNow - this->posMouseOrigin;
-                move(this->pos() + ptDelta);
-                posMouseOrigin = ptMouseNow;
-                //qDebug() << "table->viewport mouse moveevent";
-            }
+        else if (event->type() == QEvent::MouseMove){
+            //qDebug() << "table mouse moveevent";
         }
-        return QMainWindow::eventFilter(obj, event);
+    }
+    else if (obj == ui->toDoTable->viewport())
+    {
+        if (event->type() == QEvent::MouseButtonPress){
+            //qDebug() << "table->viewport mouse press event";
+            this->posMouseOrigin = QCursor::pos(); //cursor是一个光标类
+        }
+        else if (event->type() == QEvent::MouseMove){
+            QPoint ptMouseNow = QCursor::pos();
+            QPoint ptDelta = ptMouseNow - this->posMouseOrigin;
+            move(this->pos() + ptDelta);
+            posMouseOrigin = ptMouseNow;
+            //qDebug() << "table->viewport mouse moveevent";
+        }
+    }
+
+    ///click pin lable
+    if(obj == ui->pinLabel && event->type() == QEvent::MouseButtonPress){
+        qDebug()<<"click pinlabel";
+        pinState = !pinState;
+        if(pinState){
+            qDebug()<<"unpin";
+            ui->pinLabel->setPixmap(QPixmap(":/icons/unpin"));
+        }
+        else{
+            ui->pinLabel->setPixmap(QPixmap(":/icons/pin"));
+        }
+    }
+    return QMainWindow::eventFilter(obj, event);
 }
 
 ///进入计时，计时结束显示窗口
@@ -373,17 +388,4 @@ void MainWindow::loadToDo(){
         addNewItem("double click to add your first task");
     }
     addNewItem("");
-}
-
-
-void MainWindow::on_pinButton_clicked()
-{
-    pinState = !pinState;
-    if(pinState){
-        qDebug()<<"unpin";
-        ui->pinButton->setIcon(QIcon(":/icons/unpin"));
-    }
-    else{
-        ui->pinButton->setIcon(QIcon(":/icons/pin"));
-    }
 }

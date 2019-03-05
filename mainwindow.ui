@@ -26,66 +26,25 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="3" column="0">
-     <widget class="QPushButton" name="pinButton">
+     <widget class="QLabel" name="pinLabel">
       <property name="maximumSize">
        <size>
         <width>32</width>
         <height>32</height>
        </size>
       </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
-      </property>
       <property name="text">
        <string/>
       </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>:/png/pin.png</normaloff>:/png/pin.png</iconset>
+      <property name="pixmap">
+       <pixmap resource="icons.qrc">:/icons/pin</pixmap>
       </property>
-      <property name="iconSize">
-       <size>
-        <width>64</width>
-        <height>0</height>
-       </size>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
-    <item row="2" column="3">
-     <widget class="QPushButton" name="addToDo">
-      <property name="maximumSize">
-       <size>
-        <width>1</width>
-        <height>1</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">* { show-decoration-selected: 1 }
-* { border: 0px solid white }
-* { font: large &quot;幼圆&quot; }
-* {background-color:transparent}
-
-QListView::item:hover {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 transparent, stop: 1 transparent);
-}
-
-QListView::item:selected:!active {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 transparent, stop: 1 transparent);
-}
-
-QListView::icon:hover {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 transparent, stop: 1 transparent);
-}</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0" rowspan="3" colspan="4">
+    <item row="0" column="0" rowspan="3" colspan="5">
      <widget class="QTableWidget" name="toDoTable">
       <property name="palette">
        <palette>
@@ -288,7 +247,48 @@ QTableWidget::item:selected:!active {
 QTableWidget::icon:hover {
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                 stop: 0 transparent, stop: 1 transparent);
-}</string>
+}
+
+QScrollBar:vertical {
+            border: 0px solid #c6c6c6;
+            background: transparent;
+            width: 13px;    
+            margin: 0px 0px 0px 0px;
+        }
+
+QScrollBar:horizontal {
+            border: 0px solid #c6c6c6;
+            background: transparent;
+            height: 13px;    
+            margin: 0px 0px 0px 0px;
+        }
+
+QScrollBar::handle{
+background: #c6c6c6;
+border: 3px solid 1;
+border-radius: 6px;
+}
+
+QScrollBar::add-line:vertical {
+            height: 0px;
+            subcontrol-position: bottom;
+            subcontrol-origin: margin;
+        }
+QScrollBar::sub-line:vertical {
+            height: 0 px;
+            subcontrol-position: top;
+            subcontrol-origin: margin;
+        }
+QScrollBar::add-line:horizontal {
+            width: 0px;
+            subcontrol-position: right;
+            subcontrol-origin: margin;
+        }
+QScrollBar::sub-line:horizontal {
+            width: 0 px;
+            subcontrol-position: left;
+            subcontrol-origin: margin;
+        }</string>
       </property>
       <column>
        <property name="text">
@@ -307,31 +307,56 @@ QTableWidget::icon:hover {
       </column>
      </widget>
     </item>
-    <item row="3" column="1">
-     <widget class="QPushButton" name="settingButton">
-      <property name="minimumSize">
+    <item row="2" column="4">
+     <widget class="QPushButton" name="addToDo">
+      <property name="maximumSize">
        <size>
-        <width>32</width>
-        <height>32</height>
+        <width>1</width>
+        <height>1</height>
        </size>
       </property>
+      <property name="styleSheet">
+       <string notr="true">* { show-decoration-selected: 1 }
+* { border: 0px solid white }
+* { font: large &quot;幼圆&quot; }
+* {background-color:transparent}
+
+QListView::item:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 transparent, stop: 1 transparent);
+}
+
+QListView::item:selected:!active {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 transparent, stop: 1 transparent);
+}
+
+QListView::icon:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 transparent, stop: 1 transparent);
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLabel" name="setLabel">
       <property name="maximumSize">
        <size>
         <width>32</width>
         <height>32</height>
        </size>
       </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
-      </property>
       <property name="text">
        <string/>
       </property>
-      <property name="iconSize">
-       <size>
-        <width>32</width>
-        <height>32</height>
-       </size>
+      <property name="pixmap">
+       <pixmap resource="icons.qrc">:/icons/setting</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -358,6 +383,8 @@ QTableWidget::icon:hover {
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

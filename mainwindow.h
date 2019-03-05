@@ -17,6 +17,8 @@
 #include <QTableWidgetItem>
 #include <QCoreApplication>
 #include <QGraphicsDropShadowEffect>
+#include <QPicture>
+
 namespace Ui {
 class MainWindow;
 }
@@ -81,8 +83,6 @@ private slots:
     void on_toDoTable_cellDoubleClicked(int row, int column);
 
     void on_toDoTable_clicked(const QModelIndex &index);
-
-    void on_pinButton_clicked();
 
 private:
     Ui::MainWindow *ui;
