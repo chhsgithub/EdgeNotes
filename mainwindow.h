@@ -18,6 +18,7 @@
 #include <QCoreApplication>
 #include <QGraphicsDropShadowEffect>
 #include <QPicture>
+#include <settings.h>
 
 namespace Ui {
 class MainWindow;
@@ -55,7 +56,7 @@ public:
 
     void paintEvent(QPaintEvent *event);
 
-    bool eventFilter(QObject *obj, QEvent *event);
+
 
     void resizeEvent(QResizeEvent* event);
 
@@ -63,11 +64,16 @@ public:
     QDesktopWidget* desktopWidget;
     QRect screenRect;
 
+    ///settings
+    settings *setting;
+    bool tempPinState;
+
 public slots:
 
     void showWindow();
     void checkEmpty();
     void editingFunction();
+    void settingClosed();
 
 Q_SIGNALS:
     void sig_focusChanged();
@@ -86,6 +92,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    bool eventFilter(QObject *obj, QEvent *event);
 
     //鼠标原始位置
     QPoint posMouseOrigin;

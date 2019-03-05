@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
     //setWindowOpacity(0.7); //透明
+
     ///图标
     //checkIcon = QIcon(":/icons/check");
     checkIcon.addFile(":/icons/check");
@@ -25,25 +26,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     ///透明
-    //this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
-
-    //ui->toDoView->setStyleSheet("background-color:transparent");
-    //setAttribute(Qt::WA_TranslucentBackground);
-    // 必须要用QPlette调色板，才能使透明按照背景颜色生效
-    // 若不适用调色板则全黑, Qt::WA_TranslucentBackground会导致全黑
-    //QPalette pal = palette();
-    //pal.setColor(QPalette::Background, QColor(0x00,0xff,0x00,0x00));
-    //setPalette(pal);
 
     delayTime = 500;
 
 
     ///判定是否在输入状态
     SignalItemDelegate* delegate = new SignalItemDelegate(ui->toDoTable);
-    QObject::connect(delegate,&SignalItemDelegate::editStarted, this, &MainWindow::editingFunction);
+    connect(delegate,&SignalItemDelegate::editStarted, this, &MainWindow::editingFunction);
     //QObject::connect(delegate,&SignalItemDelegate::editFinished,[](){SignalItemDelegate::isE = false;});
-    QObject::connect(delegate,&SignalItemDelegate::editFinished, this, &MainWindow::checkEmpty);
+    connect(delegate,&SignalItemDelegate::editFinished, this, &MainWindow::checkEmpty);
     ui->toDoTable->setItemDelegate(delegate);
 
     ///todo table
@@ -51,7 +43,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toDoTable->setWordWrap(true);
 
     ///列设置
-
     ui->toDoTable->horizontalHeader()->hide();
     ui->toDoTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->toDoTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);//对第0列单独设置固定宽度
@@ -72,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ///talbe鼠标事件
     ui->toDoTable->viewport()->installEventFilter(this);
 
+    ///table shadow
     QGraphicsDropShadowEffect* effect = new QGraphicsDropShadowEffect;
     effect->setOffset(0);
     effect->setBlurRadius(10);
@@ -81,6 +73,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ///pin or unpin event
     ui->pinLabel->installEventFilter(this);
 
+    ///setting event
+    ui->setLabel->installEventFilter(this);
+    setting = new settings(this);
+    connect(setting, &settings::closeSignal, this, &MainWindow::settingClosed);
 }
 
 MainWindow::~MainWindow()
@@ -158,6 +154,18 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
             ui->pinLabel->setPixmap(QPixmap(":/icons/pin"));
         }
     }
+
+    if(obj == ui->setLabel && event->type() == QEvent::MouseButtonPress){
+        qDebug()<<"click setLabel";
+        tempPinState = pinState;
+        pinState = true;
+        setting->show();
+        QRect rect;
+        rect = setting->geometry();
+        setting->move((screenRect.width()- rect.width())/2,
+                      (screenRect.height()- rect.height())/2);
+    }
+
     return QMainWindow::eventFilter(obj, event);
 }
 
@@ -388,4 +396,8 @@ void MainWindow::loadToDo(){
         addNewItem("double click to add your first task");
     }
     addNewItem("");
+}
+
+void MainWindow::settingClosed(){
+    pinState = tempPinState;
 }
