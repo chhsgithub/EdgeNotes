@@ -1,12 +1,13 @@
 # EdgeNotes
-A small note that appears and hides on the edge of the screen, when you put the cursor on the edge.
+A small note with high DPI that can appear and hide on the edge of the screen, when you put the cursor on the edge.
 
 Features: 
-- Without taskbar icon
-- Without tray icon
+- No taskbar icon
+- No tray icon
 - Memory usage 15 MB
 - Appear and disappear depends on cursor position
 - Pin/ unpin on the top
+- High Dpi support
 
 ![show](https://github.com/chhsgithub/EdgeNotes/blob/master/gif.gif)
 ****
