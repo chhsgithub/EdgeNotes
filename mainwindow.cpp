@@ -10,7 +10,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     //setWindowOpacity(0.7); //透明
     ///图标
-    checkIcon = QIcon("C:/Users/chen/OneDrive/workspace/Qt/todo/icon.png");
+    checkIcon = QIcon(":/icons/check");
+    ui->pinButton->setIcon(QIcon(":/icons/pin"));
+    ui->settingButton->setIcon(QIcon(":/icons/setting"));
+
+    ///获取可用桌面大小
+    desktopWidget = QApplication::desktop();
+    screenRect = desktopWidget->screenGeometry();
 
     ///load to do item
     loadToDo();
@@ -31,9 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //setPalette(pal);
 
     delayTime = 500;
-    ///获取可用桌面大小
-    desktopWidget = QApplication::desktop();
-    screenRect = desktopWidget->screenGeometry();
+
 
     ///判定是否在输入状态
     SignalItemDelegate* delegate = new SignalItemDelegate(ui->toDoTable);
@@ -170,13 +174,26 @@ void MainWindow::showWindow(){
 ///离开窗口
 void MainWindow::leaveEvent(QEvent *)
 {
-    if(SignalItemDelegate::isE == true){
+    if(SignalItemDelegate::isE || pinState){
         return;
     }
     QRect rect;
     rect = this->geometry();
     move(screenRect.width()- 1, -rect.height()+1);
 
+}
+
+///窗口被隐藏
+bool MainWindow::event(QEvent *e)
+{
+    // window was deactivated
+    if (e->type() == QEvent::WindowDeactivate && !pinState) {
+        SignalItemDelegate::isE = false;
+        QRect rect;
+        rect = this->geometry();
+        move(screenRect.width()- 1, -rect.height()+1);
+    }
+    return QWidget::event(e);
 }
 
 
@@ -228,18 +245,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) //重写keyPressEvent函数
     qDebug()<<SignalItemDelegate::isE;
 }
 
-//窗口被隐藏
-bool MainWindow::event(QEvent *e)
-{
-    // window was deactivated
-    if (e->type() == QEvent::WindowDeactivate) {
-        SignalItemDelegate::isE = false;
-        QRect rect;
-        rect = this->geometry();
-        move(screenRect.width()- 1, -rect.height()+1);
-    }
-    return QWidget::event(e);
-}
+
 
 void MainWindow::checkEmpty()
 {   if(checking){
@@ -369,3 +375,15 @@ void MainWindow::loadToDo(){
     addNewItem("");
 }
 
+
+void MainWindow::on_pinButton_clicked()
+{
+    pinState = !pinState;
+    if(pinState){
+        qDebug()<<"unpin";
+        ui->pinButton->setIcon(QIcon(":/icons/unpin"));
+    }
+    else{
+        ui->pinButton->setIcon(QIcon(":/icons/pin"));
+    }
+}

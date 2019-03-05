@@ -20,5 +20,9 @@ int main(int argc, char *argv[])
     w.setWindowFlags(Qt::Tool |Qt::FramelessWindowHint| Qt::WindowStaysOnTopHint);
     w.show();
 
+    ///move mainwidow
+    QRect rect;
+    rect = w.geometry();
+    w.move(w.screenRect.width()- 1, -rect.height()+1);
     return a.exec();
 }

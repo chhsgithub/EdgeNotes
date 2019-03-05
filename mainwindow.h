@@ -56,6 +56,11 @@ public:
     bool eventFilter(QObject *obj, QEvent *event);
 
     void resizeEvent(QResizeEvent* event);
+
+    ///获取显示器分辨率大小
+    QDesktopWidget* desktopWidget;
+    QRect screenRect;
+
 public slots:
 
     void showWindow();
@@ -77,6 +82,8 @@ private slots:
 
     void on_toDoTable_clicked(const QModelIndex &index);
 
+    void on_pinButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -86,13 +93,12 @@ private:
     ///出现的延迟时间
     int delayTime;
 
-    ///获取显示器分辨率大小
-    QDesktopWidget* desktopWidget;
-    QRect screenRect;
+
 
     QListWidgetItem *currentItem;
 
     bool checking = false;
+    bool pinState = false;
 
     QIcon checkIcon;
 
