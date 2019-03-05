@@ -10,6 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     //setWindowOpacity(0.7); //透明
 
+    ///setting event
+    ui->setLabel->installEventFilter(this);
+    setting = new Settings(this);
+    connect(setting, &Settings::adjustSignal, this, &MainWindow::settingClosed);
+
     ///图标
     //checkIcon = QIcon(":/icons/check");
     checkIcon.addFile(":/icons/check");
@@ -73,10 +78,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ///pin or unpin event
     ui->pinLabel->installEventFilter(this);
 
-    ///setting event
-    ui->setLabel->installEventFilter(this);
-    setting = new settings(this);
-    connect(setting, &settings::closeSignal, this, &MainWindow::settingClosed);
+    ///load setting
+    settingClosed();
+
 }
 
 MainWindow::~MainWindow()
@@ -400,4 +404,7 @@ void MainWindow::loadToDo(){
 
 void MainWindow::settingClosed(){
     pinState = tempPinState;
+    delayTime = setting->appearTime;
+    ui->toDoTable->setFont(setting->fnt);
+    ui->toDoTable->resizeRowsToContents();
 }

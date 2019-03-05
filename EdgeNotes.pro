@@ -30,7 +30,8 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    settings.h
+    settings.h \
+    signalitemdelegate.h
 
 FORMS += \
         mainwindow.ui \
