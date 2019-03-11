@@ -28,7 +28,7 @@ Features:
 ****
 # Done
 - Enable to change font and appear time.
-- Sync between Windows.
+- Sync between Windows with [JsonStore](https://www.jsonstore.io/).
 
 ****
 # To do
