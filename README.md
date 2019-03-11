@@ -27,7 +27,8 @@ Features:
 
 ****
 # Done
-- Settings to enable fonts or someting else.
+- Enable to change font and appear time.
+- Sync between Windows.
 
 ****
 # To do
